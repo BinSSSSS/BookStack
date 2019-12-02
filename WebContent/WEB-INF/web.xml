@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>BookStack</display-name>
+  
+  
+  <filter>
+  	<filter-name>AutoLoginFilter</filter-name>
+  	<filter-class>cn.tblack.filter.AutoLoginFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>AutoLoginFilter</filter-name>
+  	<url-pattern>/homePage.html</url-pattern>
+  </filter-mapping>
+  
+  <!-- 设置后台过滤器 -->
+  <filter>
+  	<filter-name>BackstageFilter</filter-name>
+  	<filter-class>cn.tblack.filter.BackstageFilter</filter-class>
+  </filter>
+  
+  <!-- 所有后台请求都需要进行过滤 -->
+  <filter-mapping>
+  	<filter-name>BackstageFilter</filter-name>
+  	<url-pattern>/bs/*</url-pattern>
+  </filter-mapping>
+</web-app>

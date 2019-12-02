@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CH">
+<head>
+	<meta charset="UTF-8">
+	<title>Header</title>
+	<link rel="stylesheet" href="css/homePage.css">
+	<link rel="stylesheet" href="MyIcon/iconfont.css">
+	<link rel="stylesheet" href="css/main.css">
+	<meta name="keywords" content="书栈,技术分享,Oracle,C/C++,说栈">
+</head>
+<body>
+	<nav  class="top-nav navbar-fixed nav-default" role="navigation">
+		
+		<div class="nav-box">
+		<!--左方LOGO标签 -->
+		<a href="#" class="M-log">
+			<!-- 书栈logo -->
+			<img src="img/M-log.png" alt="">	
+		</a>
+		<!-- 写文章按钮 -->
+		<a href="#" class="btn btn-write ">
+			<i class="write-lg iconfont icon-maobi1"> 写文章</i>
+		</a>
+		<!-- 注册 -->
+		<a href="#" class="btn sign-up">注册</a>
+		<!-- 登录 -->
+		<a href="#" class="btn log-in">登录</a>	
+		<!-- 默认字体样式 -->
+		<div class="style-mode">
+			<a href="#" class="style-mode-btn">
+				<i class="iconfont icon-Aa1 ic-mode"></i>
+			</a>	
+			<!-- 隐藏的更多模式 -->
+			<div class="more-mode" style="left: 1018px; display: none;">
+				<div class="meta">
+					<i class="iconfont icon-yueliang nav-night"></i>
+					<span>夜间模式</span>
+				</div>
+				<div class="switch day-night">
+					<a class="switch-btn">开</a>
+					<a class="switch-btn active">关</a>
+				</div>
+				 <hr>
+				<div class="switch font-family-grounp">
+				 	<a class="switch-btn font-kai">楷体</a>
+				 	<a class="switch-btn font-you active">幼圆</a>
+				</div>
+				<div class="switch font-mode">
+					<a class="switch-btn active">简</a>
+					<a class="switch-btn ">繁</a>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 导航栏中间布局 -->
+		<div class="container">
+			<div class="navbar-collapse	collapse in">
+			<ul class="nav navbar-nav">
+				<!-- 发现 -->
+				<li class="tab active">
+					<a href="#">
+						<span class="menu-text">发现</span>
+						<i class="iconfont menu-icon icon-faxian"></i>
+					</a>
+				</li>
+				<li class="tab t-follows">
+					<a href="#">
+						<span class="menu-text">关注</span>
+						<i class="iconfont menu-icon icon-shuben"></i>
+					</a>
+				</li>
+				<li class="tab notification">
+					<a class="notification-btn">
+						<span class="menu-text">消息</span>
+						<i class="iconfont menu-icon icon-xiaoxi1"></i>
+					</a>
+					<!-- 下拉的消息列表 -->
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">
+								<i class="iconfont ic-comments icon-_huaban"></i>
+								<span>评论</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="iconfont ic-mail icon-youxiang"></i>
+								<span>简信</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="iconfont ic-request icon-faqiqingqiu"></i>
+								<span>投稿请求</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="iconfont ic-likes icon-xihuan"></i>
+								<span>喜欢和赞</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="iconfont ic-follows icon-guanzhu"></i>
+								<span>关注</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="iconfont ic-money icon-zanshangjilu"></i>
+								<span>赞赏和付费</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="iconfont ic-other icon-iconfontgengduo"></i>
+								<span>其他提醒</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<!-- 搜索栏 -->
+				<li class="search">
+					<form action="/search" target="_blank" accept-charset="uft-8" method="post">
+						<input type="hidden" value="✓" name="uft8">
+						<input type="text" name="q" id="q"  autocomplete="off" placeholder="搜索" class="search-input">	
+						<a class="btn-search" href="javascript:void(null)">
+							<i class="iconfont ic-search icon-sousuo"></i>
+						</a>
+						<!-- 搜索栏提示 -->
+						<div id="navbar-search-tips" >
+							<!-- 最近搜索趋势 -->
+							<div class="search-trending">
+								<div class="search-trending-header clearfix">
+									<span>热门搜索</span>
+									<a >
+										<i class="iconfont icon-shuaxin ic-change"></i>
+										换一批
+									</a>
+								</div>
+								<ul class="search-trending-tags">
+									<li>
+										<a href="#">区块链</a>
+									</li>
+									<li>
+										<a href="#">小程序</a>
+									</li>
+									<li>
+										<a href="#">C++</a>
+									</li>
+									<li>
+										<a href="#">畅销书</a>
+									</li>
+									<li>
+										<a href="#">网络编程</a>
+									</li>
+									<li>
+										<a href="#">美食</a>
+									</li>
+									<li>
+										<a href="#">创意</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</form>
+				</li>
+				</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+</body>
+</html>

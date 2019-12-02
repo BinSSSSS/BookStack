@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<c3p0-config>
+
+
+	<!-- 使用named-config 在 调用ComboPooledDataSource函数的时候， 则使用该定义的名字 oracle-->
+	<named-config name="oracle">
+
+
+		<!-- oracle数据库的链接步骤 -->
+		<!-- 1.找到oracle的驱动 -->
+		<property name="driverClass">oracle.jdbc.driver.OracleDriver</property>
+		<!-- 2.设置链接url -->
+		<property name="jdbcUrl">jdbc:oracle:thin://localhost:1521/ORCL
+		</property>
+		<!-- 3.设置连接用户 -->
+		<property name="user">c##scott</property>
+		<!-- 4.设置连接用户密码 -->
+		<property name="password">tiger</property>
+
+
+
+		<!-- 初始化数据库池大小 -->
+		<property name="initialPoolSize">20</property>
+		<property name="maxIdleTime">30</property>
+		<!-- 最大的池大小 -->
+		<property name="maxPoolSize">100</property>
+		<!-- 最小的池大小 -->
+		<property name="minPoolSize">10</property>
+		<!-- 数据库池最大可维护的statement数量 -->
+		<property name="maxStatements">200</property>
+		<!-- 每个连接最大可使用的statement数量 -->
+		<property name="maxStatementsPerConnection">5</property>
+
+	</named-config>
+
+
+</c3p0-config>

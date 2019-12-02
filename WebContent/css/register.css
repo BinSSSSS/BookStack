@@ -1,0 +1,161 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    font-famliy: 幼圆, consolar;
+}
+a{
+    text-decoration: none;
+}
+botton{
+    cursor: pointer;
+}
+.side{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 480px;
+    float: left;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url("/img/sky.jpg");
+}
+.wapper{
+
+}
+.welcome{
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: rgb(240,109,83);
+}
+.header{
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+.center-box{
+    mid-width: 770px;
+    width: 480px;
+    position: fixed;
+    top: 50%;
+    left:70%;
+    margin: -280px 0 0 -250.5px;
+    /*z-index: 1400;*/
+}
+.input-placeholder{
+    position: absolute;
+    font-size: 20px;
+    line-height: 20px;
+    padding: 16px 20px;
+    background: #fff;
+    z-index: -1;
+    font-weight: lighter;
+    color: #aaa;
+}
+#submit{
+    text-align: center;
+    background-color: #398fff;
+    color: #fff;
+    font-size: 24px;
+    margin: 40px 0 8px;
+    width: 478px;
+    height: 60px;
+}
+.input-flag{
+    position: absolute;
+    right: 0;
+    height:52px;
+    z-index:1;
+}
+.input-flag .input-ok{
+    background: url("/img/tick.png")  no-repeat;
+    width: 20px;
+    height: 15px;
+    float: right;
+    margin: 18.5px 10px;
+}
+.input-area{
+    position: relative;
+}
+.input-outer{
+    margin: 24px 0 0 ;
+}
+.error-tips-wrap{
+    padding-top: 8px;
+    height: 18px;
+    overflow: hidden;
+    position: relative;
+    line-height: 1;
+}
+.error-tips{
+    background: url("/img/error.png") no-repeat;
+    padding: 0 0 0 24px;
+    color: #ff5b5b;
+    font-size: 14px;
+    line-height: 18px;
+    height: 18px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+}
+.center-box input{
+
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background: 0 0;
+    text-align: left;
+    font-size: 20px;
+    width: 438px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+}
+.input-outer input:focus{
+    border-color: #549df8;
+}
+.text{
+    display: inline;
+    color: #333;
+    font-size: 14px;
+}
+.account{
+    margin-top: 20px;
+    font-size: 32px;
+    color: #ff5b5b;
+}
+.succ{
+    position: relative;
+    margin: 0 auto ;
+    text-align: center;
+}
+.succ-logo{
+    background: url("/BookStack/img/succ.png") no-repeat;
+    background-size: 80px 80px;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+}
+.reg-succ{
+    padding-top: 16px;
+    font-size: 28px;
+    line-height: 1;
+    color: #000;
+}
+.login{
+    border: 1px #3083ff solid;
+    border-radius: 4px;
+    background-color: #3487ff;
+    box-shadow: 0 5px 8px 0 rgba(24,95,255,.1);
+    color: #fff;
+    text-align: center;
+    font-weight: lighter;
+    background-image: linear-gradient(0deg,#398bff,#3083ff);
+    font-size: 24px;
+    width: 400px;
+    height: 62px;
+    margin: 56px auto 0 auto;
+}

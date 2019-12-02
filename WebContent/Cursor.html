@@ -1,0 +1,783 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CH">
+<head>
+	<meta charset="UTF-8">
+    <title>Oracle编程之游标</title>
+    <link rel="icon" href="img/L-log.png">
+	<link rel="stylesheet" href="css/Article.css">
+    <link rel="stylesheet" href="css/homePage.css">
+    <link rel="stylesheet" href="MyIcon/iconfont.css">
+    <link rel="stylesheet" href="css/main.css">
+    <base target="_blank">
+    <meta name="keywords" content="书栈,技术分享,Oracle,C/C++,说栈,Oracle游标">
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/navigation.js"></script>
+</head>
+<body>
+<nav  class="top-nav navbar-fixed nav-default" role="navigation">
+        
+        <div class="nav-box">
+        <!--左方LOGO标签 -->
+        <a href="http://www.tblack.cn" class="M-log" >
+            <!-- 书栈logo -->
+            <img src="img/M-log.png" alt="">    
+        </a>
+        <!-- 写文章按钮 -->
+        <a href="#" class="btn btn-write ">
+            <i class="write-lg iconfont icon-maobi1"> 写文章</i>
+        </a>
+        <!-- 注册 -->
+        <a href="#" class="btn sign-up">注册</a>
+        <!-- 登录 -->
+        <a href="#" class="btn log-in">登录</a>   
+        <!-- 默认字体样式 -->
+        <div class="style-mode">
+            <a class="style-mode-btn">
+                <i class="iconfont icon-Aa1 ic-mode"></i>
+            </a>    
+            <!-- 隐藏的更多模式 -->
+            <div class="more-mode" style="left: 1018px; display: none;">
+                <div class="meta">
+                    <i class="iconfont icon-yueliang nav-night"></i>
+                    <span>夜间模式</span>
+                </div>
+                <div class="switch day-night">
+                    <a class="switch-btn">开</a>
+                    <a class="switch-btn active">关</a>
+                </div>
+                 <hr>
+                <div class="switch font-family-grounp">
+                    <a class="switch-btn font-kai">楷体</a>
+                    <a class="switch-btn font-you active">幼圆</a>
+                </div>
+                <div class="switch font-mode">
+                    <a class="switch-btn active">简</a>
+                    <a class="switch-btn ">繁</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 导航栏中间布局 -->
+        <div class="container">
+            <div class="navbar-collapse collapse in">
+            <ul class="nav navbar-nav">
+                <!-- 发现 -->
+                <li class="tab active">
+                    <a href="#">
+                        <span class="menu-text">发现</span>
+                        <i class="iconfont menu-icon icon-faxian"></i>
+                    </a>
+                </li>
+                <li class="tab t-follows">
+                    <a href="#">
+                        <span class="menu-text">关注</span>
+                        <i class="iconfont menu-icon icon-shuben"></i>
+                    </a>
+                </li>
+                <li class="tab notification">
+                    <a class="notification-btn">
+                        <span class="menu-text">消息</span>
+                        <i class="iconfont menu-icon icon-xiaoxi1"></i>
+                    </a>
+                    <!-- 下拉的消息列表 -->
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">
+                                <i class="iconfont ic-comments icon-_huaban"></i>
+                                <span>评论</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconfont ic-mail icon-youxiang"></i>
+                                <span>简信</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconfont ic-request icon-faqiqingqiu"></i>
+                                <span>投稿请求</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconfont ic-likes icon-xihuan"></i>
+                                <span>喜欢和赞</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconfont ic-follows icon-guanzhu"></i>
+                                <span>关注</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconfont ic-money icon-zanshangjilu"></i>
+                                <span>赞赏和付费</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconfont ic-other icon-iconfontgengduo"></i>
+                                <span>其他提醒</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- 搜索栏 -->
+                <li class="search">
+                    <form action="/search" target="_blank"method="get">
+                        <input type="hidden" value="✓" name="uft8">
+                        <input type="text" name="q" id="q"  autocomplete="off" placeholder="搜索" class="search-input">  
+                        <a class="btn-search" href="javascript:void(null)">
+                            <i class="iconfont ic-search icon-sousuo"></i>
+                        </a>
+                        <!-- 搜索栏提示 -->
+                        <div id="navbar-search-tips">
+                            <!-- 最近搜索趋势 -->
+                            <div class="search-trending">
+                                <div class="search-trending-header clearfix">
+                                    <span>热门搜索</span>
+                                    <a >
+                                        <i class="iconfont icon-shuaxin ic-change"></i>
+                                        换一批
+                                    </a>
+                                </div>
+                                <ul class="search-trending-tags">
+                                    <li>
+                                        <a href="#">区块链</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">小程序</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">C++</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">畅销书</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">网络编程</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">美食</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">创意</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+                </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="note">
+        <div id="note-fixed-ad-container">
+        <div id="fixed-ad-container">
+            <div style='display:  block;'>
+                <a href="#" id='web-note-ad-fixed'>
+                    <span class='close'>×</span>
+                </a>
+            </div>
+            <div id="write-notes-ad"></div>
+            <div id="youdao-fixed-ad"></div>
+            <div id="yuxi-fixed-ad"></div>
+            <div id="_so_pdsBy_0"></div>
+        </div>
+        </div>
+        <div class="post">
+            <div class="article">  <!-- 文章-->
+            <h1 class="title">Oracle游标</h1>
+                <div class="author">
+                    <a class="avatar" href="https://me.csdn.net/David_TD" target="_blank">
+                         <img src="img/avatar.jpg">
+                    </a>
+                    <div class="info">
+                         <span class="name">
+                            <a href="http://www.tblack.cn" target="_blank">书栈</a>
+                        </span>
+                         
+                         <div props-data-classes="user-follow-button-header" data-author-follow-button></div>
+                         <!-- 文章数据信息 -->
+                         <div class="meta">
+                         <!-- 如果文章更新时间大于发布时间，那么使用 tool tip 显示更新时间 -->
+                         <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="最后编辑于 2019.02.18 18:53">2019.03.27 9:30*</span>
+                         <span class="wordage"></span>
+                         </div>
+                    </div>
+                </div>
+                <!-- 文章内容 -->
+                <div data-note-content class="show-content">
+                    <div class="show-content-free">
+                        <h2>游标</h2>
+                        <p>在使用SQL编写查询语句的时候，所有的查询结果都会直接显示给用户，但是在很多情况下，用户需要对返回结果中的每一条数据分别进行操作，则这个时候普通的查询语句就无法使用了，那么就可以通过结果集（由查询语句返回完整的行集合叫做结果集）来接收，之后就可以利用游标来进行操作。</p>
+                       
+                        <h2>游标分类</h2>
+                        <strong style='text-indent:2em'>在Oracle数据中之中 ，游标分为以下两种类型：</strong>
+                            <ul>
+                                <li>静态游标： 结果集已经存在（静态定义）的游标。分为隐式游标和显示游标。</li>
+                                <ul>
+                                    <li >隐式游标： 所有DML语句为隐式游标，通过隐式游标属性可以获取SQL语句信息.</li>
+                                     <li >显示游标：   用户显示声明的游标，即指定结果集。 当查询返回结果超过一行时，就需要一个显示游标.</li>
+                                </ul>
+                                <li>REF 游标： 动态关联结果集的临时对象。</li>
+                            </ul>
+                        <h2>隐式游标</h2>
+                        <div class="image-caption">
+                                <img src="img/ImplicitCursor.png" alt="隐式游标">
+                        </div>
+                        </div>
+
+                        <p>在PL/SQL块之中写的每条SQL语句其实上就是隐式游标。 通过在DML操作之后使用 ‘SQL%ROWCOUNT’ 属性，可以知道语句所改变的行数（INSERT 、 UPDATE 、DELETE返回更新行数,SELECT 返回查询行数)</p>
+                        <br>
+                        <strong>范例：验证 SQL%ROWCOUNT</strong>
+                        <pre class='source-code'>
+DECLARE
+    v_count          NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO v_count FROM dept; ---返回一行数据
+    DBMS_OUTPUT.put_line('SQL%ROWCOUNT = ' || SQL%ROWCOUNT);
+END;
+/
+                        </pre>
+                        <br>
+                        <strong>范例：通过更新操作观察影响的函数</strong>
+                        <pre class="source-code">
+DECLARE
+BEGIN
+    UPDATE dept SET  dname='BlueDream'; ---返回多行数据
+    DBMS_OUTPUT.put_line('SQL%ROWCOUNT = ' || SQL%ROWCOUNT);
+END;
+/
+                        </pre>
+                        <p>
+                            对于隐式游标也分为： 多行隐式游标 和 单行隐式游标
+                        </p>
+                        <p>单行隐式游标主要是返回单行数据：</p>
+                        <strong>范例:</strong>
+                        <pre class="source-code">
+DECLARE
+    v_empRow         emp%ROWTYPE;
+BEGIN
+    SELECT * INTO v_empRow FROM emp WHERE empno=7369;
+    IF SQL%FOUND THEN
+         DBMS_OUTPUT.put_line('雇员编号: ' || v_empRow.empno ||' 雇员姓名: ' || v_empRow.ename || ' 雇员工作: ' || v_empRow.job);
+END IF;
+END;
+/
+                        </pre>
+                        <strong>范例： 多行隐式游标 。 主要是返回多行数据</strong>
+                        <pre class='source-code'>
+DECLARE
+BEGIN
+    UPDATE dept SET dname='BLUEDREAM';
+    IF SQL%FOUND THEN
+        DBMS_OUTPUT.put_line('更新的行数为: ' || SQL%ROWCOUNT);
+    ELSE 
+        DBMS_OUTPUT.put_line('没有记录被更新');
+    END IF;
+END;
+/ 
+                        </pre>
+                        <h2>显示游标</h2>
+                        <ul>
+                            <li>隐式游标是用户操作SQL自动生成的，而显示游标的话指的是在声明块中直接定义的游标，而在每一个游标之中，都会保存SELECT查询后的返回结果，显示游标的创建语法如下：
+                            <ul>
+                                <li>创建显示游标
+                                    <pre class='source-code'>
+CURSOR 游标名称([参数列表]) [ RETURN 返回类型]
+        IS 子查询
+[FOR UPDATE [OF 数据列，数据列...] [NOWAIT]];
+                                    </pre>
+                                </li>
+                            </ul>
+                            </li>
+                            <li>在PL/SQL中显示游标的操作步骤如下：
+                                <ul>
+                                    <li>第一步： 声明游标(CURSOR 游标名称 IS 查询语句）。 使用CURSOR 定义</li>
+                                    <li>第二步： 为查询打开游标，（语法： OPEN 游标名称）。 使用OPEN操作，当游标打开时会首先检查绑定此游标的变量内容，之后再确定所使用的查询结果集，最后游标将指向结果集的第一行。如果用户定义的就是一个带有参数的游标，则会在打开游标的时候为游标设置指定的参数值。</li>
+                                    <li>第三步： 取得结果放入PL/SQL变量之中（语法： FETCH 游标名称 INTO ROWTYPE 变量)。 使用循环和FETCH....INTO....操作。</li>
+                                    <li>第四步： 关闭游标（语法： CLOSE 游标名称)。 使用CLOSE操作</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p></p>
+                        <strong>游标属性</strong>
+                        <img src="img/ImplicitCursor.png" alt="游标属性">
+                        <p></p>
+                        <strong>范例： 定义显示游标</strong>
+                        <p></p>
+                        <pre class="source-code">
+DECLARE
+    CURSOR  cur_emp IS SELECT * FROM emp;
+    v_empRow         emp%ROWTYPE;
+BEGIN
+    ---判断游标是否被打开
+    IF cur_emp%ISOPEN THEN
+        NULL;   --什么都不做
+    ELSE
+        OPEN cur_emp;       ---打开游标
+    END IF;
+    ---默认情况下游标在第一行数据上
+    FETCH cur_emp INTO v_empRow ;       ---取得第一行数据
+        DBMS_OUTPUT.put_line('雇员编号: ' ||v_empRow.empno || ' 雇员姓名: ' || 
+        v_empRow.ename || ' 雇员工作: ' || v_empRow.job);
+    CLOSE cur_emp;
+END;
+/
+
+                        </pre>
+                        <p></p>
+                        <strong>此时使用FETCH取得了第一行的数据。可以使用WHILE LOOP持续输出数据</strong>
+                        <pre class='source-code'>
+DECLARE
+    CURSOR  cur_emp IS SELECT * FROM emp;
+    v_empRow         emp%ROWTYPE;
+BEGIN
+    ---判断游标是否被打开
+    IF cur_emp%ISOPEN THEN
+        NULL;   --什么都不做
+    ELSE
+        OPEN cur_emp;       ---打开游标
+    END IF;
+    ---默认情况下游标在第一行数据上
+    FETCH cur_emp INTO v_empRow ;       ---取得第一行数据
+    WHILE cur_emp%FOUND LOOP
+        DBMS_OUTPUT.put_line('雇员编号: ' ||v_empRow.empno || ' 雇员姓名: ' || 
+        v_empRow.ename || ' 雇员工作: ' || v_empRow.job);
+    FETCH cur_emp INTO v_empRow ;       --取得下一行数据
+    END LOOP;
+    CLOSE cur_emp;
+END;
+/
+                        </pre>
+                        <p></p>
+                        <strong>程序流程图</strong>
+                        <img src="img/cursorFC.png" alt="程序流程图">
+                        <p></p>
+                        <strong>范例： 游标未打开异常</strong>
+                        <pre class="source-code">
+DECLARE
+    CURSOR  cur_emp IS SELECT * FROM emp;
+    v_empRow         emp%ROWTYPE;
+BEGIN
+
+    ---默认情况下游标在第一行数据上
+    FETCH cur_emp INTO v_empRow ;       ---取得第一行数据
+        DBMS_OUTPUT.put_line('雇员编号: ' ||v_empRow.empno || ' 雇员姓名: ' || 
+        v_empRow.ename || ' 雇员工作: ' || v_empRow.job);
+    CLOSE cur_emp;
+EXCEPTION
+    WHEN INVALID_CURSOR THEN
+        DBMS_OUTPUT.put_line('程序出错, SQL CODE = ' || SQLCODE || ' SQLERRM' || 
+        SQLERRM);
+END;
+/
+                        </pre>
+                        <p></p>
+                        <strong>范例： 使用FOR来完成操作游标</strong>
+                        <pre class="source-code">
+DECLARE
+    CURSOR  cur_emp IS SELECT * FROM emp;
+    v_empRow         emp%ROWTYPE;
+BEGIN
+    FOR v_empRow IN cur_emp LOOP
+      DBMS_OUTPUT.put_line('雇员编号: ' ||v_empRow.empno || ' 雇员姓名: ' || 
+      v_empRow.ename || ' 雇员工作: ' || v_empRow.job);
+    END LOOP;
+END;
+/ 
+                        </pre>
+                        <p></p>
+                        <strong>对于游标中的数据，也可以直接保存在索引表之中，直接就可以使用下标的方式进行操作。 <br></strong>
+                        <strong>范例：</strong>
+                        <pre class="source-code">
+DECLARE 
+    CURSOR cur_emp IS SELECT * FROM emp;    ---将表中数据传递给游标
+    TYPE emp_index IS TABLE OF emp%ROWTYPE INDEX BY PLS_INTEGER;
+    v_emp        emp_index;
+BEGIN
+    FOR emp_row IN cur_emp LOOP
+        v_emp(emp_row.empno) := emp_row; ---使用雇员编号作为索引来保存雇员信息
+    END LOOP;
+
+    ---之后通过雇员编号作为索引访问数据
+    DBMS_OUTPUT.put_line('雇员编号: 7369' ||'  雇员姓名: ' || v_emp(7369).ename || '雇员工作: '
+    || v_emp(7369).job);
+END;
+/
+                        </pre>
+                        <p></p>
+                        <br>
+                        <strong>范例：在动态SELECT 中使用游标 通过输入两个范围来查询</strong>
+                        <pre class="source-code">
+DECLARE 
+    v_lowsal             emp.sal%type := &inputlowersal;
+    v_highsal            emp.sal%type := &inputhigesal;
+    CURSOR cur_emp IS SELECT * FROM emp WHERE sal BETWEEN v_lowsal AND v_highsal;   ---将表中数据传递给游标
+    TYPE emp_index IS TABLE OF emp%ROWTYPE INDEX BY PLS_INTEGER;
+BEGIN
+    FOR emp_row IN cur_emp LOOP
+        DBMS_OUTPUT.put_line('雇员编号:'  || emp_row .empno || '  雇员姓名: ' || emp_row.ename || ' 雇员工作: ' || emp_row.job ||  ' 雇员工资: ' || emp_row.sal);
+    END LOOP;
+END;
+/
+                        </pre>
+                        <br>
+                        <p>游标也是可以进行参数传递的，这种操作叫做是参数游标。</p>
+                        <strong>范例：</strong>
+                        <pre class="source-code">
+DECLARE 
+    CURSOR cur_emp(p_dno emp.deptno%TYPE) IS SELECT * FROM emp 
+    WHERE p_dno = deptno;   -- 通过参数传递
+BEGIN
+    ---由用户输入部门号进行查找
+    FOR emp_row IN cur_emp(&inputdeptno) LOOP
+         DBMS_OUTPUT.put_line('雇员编号:'  || emp_row .empno || '  雇员姓名: ' || emp_row.ename || ' 雇员工作: ' || emp_row.job ||  ' 雇员工资: ' || emp_row.sal);
+    END LOOP;
+END;
+/ 
+---也就是说游标内的内容可以由用户自己进行定义
+                        </pre>
+                        <br>
+                        <p>如果用户现在使用的是嵌套表保存的游标内容的话，那么在游标中还有一个方便的支持，利用FETCH BULK COLLECT 语句可以一次性取出游标内的全部内容。</p>
+                        <strong><br>范例：</strong>
+                        <pre class="source-code">
+DECLARE
+    TYPE dept_nested IS TABLE OF dept%ROWTYPE;
+    CURSOR cur_emp IS SELECT * FROM dept;
+    v_dept        dept_nested;
+BEGIN
+    IF cur_emp%ISOPEN THEN
+        NULL;
+    ELSE
+        OPEN cur_emp;
+    END IF;
+    FETCH cur_emp BULK COLLECT INTO v_dept;
+    FOR x IN v_dept.FIRST .. v_dept.LAST LOOP
+        DBMS_OUTPUT.put_line('部门编号: ' || v_dept(x).deptno || '，部门名字:' ||    
+        v_dept(x).dname || ' ，部门地址: ' || v_dept(x).loc);
+    END LOOP;
+    CLOSE cur_emp;
+END;
+/
+                        </pre>
+                        <br>
+                        <p>如果想要限制取得的数据量可以使用： FETCH ... BULK COLLECT INTO ... LIMIT</p>
+                        <strong>范例： 将游标数据保存在可变数组中</strong>
+                        <pre class="source-code">
+DECLARE
+    TYPE dept_varray IS VARRAY(2) OF dept%ROWTYPE;
+    CURSOR cur_emp IS SELECT * FROM dept;
+    v_dept        dept_varray;
+    v_rows        NUMBER := 2;      ---每次只取两条数据
+    v_offset         NUMBER := 1;       ---取得数据的偏移量
+BEGIN
+    IF cur_emp%ISOPEN THEN
+        NULL;
+    ELSE
+        OPEN cur_emp;
+    END IF;
+    FETCH cur_emp BULK COLLECT INTO v_dept  LIMIT v_rows; ---限制每次数据的取得量
+    ---如果想要取得的数据少于多少条，也可以使用偏移量
+    FOR x IN v_dept.FIRST .. (v_dept.LAST - v_offset) LOOP
+        DBMS_OUTPUT.put_line('部门编号: ' || v_dept(x).deptno || '，部门名字:' ||    
+        v_dept(x).dname || ' ，部门地址: ' || v_dept(x).loc);
+    END LOOP;
+    CLOSE cur_emp;
+END;
+/
+                        </pre>
+                        <h2>修改游标数据</h2>
+                        <strong>范例：一次上涨所有人的工资</strong>
+                        <ul>
+                            <li>10部门上涨 10%</li>
+                            <li>20部门上涨 15%</li>
+                            <li>30部门上涨 20%</li>    
+                        </ul>
+                        <strong>但是每一位雇员最高上涨量不能超过5000. 此时只能通过游标来完成</strong>
+                        <pre class="source-code">
+DECLARE
+    CURSOR cur_emp IS SELECT * FROM emp; --- emp表数据
+BEGIN
+    FOR emp_row IN cur_emp LOOP
+        IF emp_row.deptno=10 AND (emp_row.sal*0.1) < 5000 THEN
+            UPDATE emp SET sal=sal*1.1 WHERE empno=emp_row.empno;
+        ELSIF emp_row.deptno=20 AND (emp_row.sal*0.15) < 5000 THEN
+            UPDATE emp SET sal=sal*1.15 WHERE empno=emp_row.empno;
+        ELSIF emp_row.deptno=30 AND (emp_row.sal*0.2) < 5000 THEN
+            UPDATE emp SET sal=sal*1.2 WHERE empno=emp_row.empno;
+        END IF;
+    END LOOP;
+    DBMS_OUTPUT.put_line('更新完成');
+END;
+/
+                        </pre>
+                        <h3>FOR UPDATE 子句</h3>
+                        <ul>
+                            <li>如果创建的游标需要执行更新或者删除的操作必须带有FOR UPDATE 子句 。 FOR UPDATE 子句会将游标提取出来的数据进行行级锁定，这样在本会话更新期间，其他用户的会话就不能对当前游标中数据行进行更新操作，而在使用FOR UPDATE 语句的时候可以使用如下两种形式。
+                                <ul>
+                                    <li>
+                                        FOR UPDATE [OF 列,...]
+                                        <ul>
+                                            <li>
+                                                此语句将为游标中的数据列增加行级锁定，这样游标在更新时，其他用户的会话将无法更新指定范围数据。
+                                            </li>
+                                            <li>
+                                                范例： 为游标数据增加行级锁
+                                                <ul>
+                                                    <li>
+                                                        CURSOR cur_emp IS SELECT * FROM emp FOR UPDATA  OF sal ,comm;
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>FOR UPDATE NOWAIT
+                                        <ul>
+                                            <li>
+                                                在Oracle之中，所有的事务都是具备隔离性的，当一个用户会话更新数据且事务未提交时，其他的用户会话是无法进行更新的，如果此时执行游标数据的更新操作，那么就进行到死锁的状态。为了避免游标出现死锁的情况，可以在创建的时候使用 FOR UPDATE NOWAIT子句，如果发现更新的数据已经被锁定，将不会进行等待而是立马返回。
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <br>
+                        <strong>范例：创建一个不等待的游标</strong>
+                        <pre class="source-code">
+DECLARE
+    CURSOR cur_emp IS SELECT * FROM emp  FOR UPDATE NOWAIT;
+BEGIN   
+    FOR emp_row IN cur_emp LOOP
+        UPDATE emp SET sal=9999 WHERE empno=emp_row.empno;
+    END LOOP;
+END;
+/
+                        </pre>
+                        <p>当其他用户正在操作数据的时候</p>
+                        <img src="img/forUpdate.png" alt="等待其他用户更新完成">
+                        <p>如果不使用NOWAIT创建的话，将会出现进行等待其他用户数据操作完毕。</p>
+                        <br>
+                        <p>使用UPDATE FOR 可以进行行级锁定。并且使用WHERE CURRENT OF 子句可以进行当前行的更新或者删除操作。</p>
+                        <pre class="source-code">
+DECLARE
+    CURSOR cur_emp IS SELECT * FROM emp  FOR UPDATE ;
+BEGIN   
+    FOR emp_row IN cur_emp LOOP
+        UPDATE emp SET sal=9999 WHERE CURRENT OF cur_emp;       ---表示更新当前行的游标数据
+    END LOOP;
+END;
+/
+
+                        </pre>
+                        <br>
+                        <strong>范例： 删除游标数据行</strong>
+                        <pre class="source-code">
+DECLARE
+    CURSOR cur_emp IS SELECT * FROM emp  FOR UPDATE ;
+BEGIN   
+    FOR emp_row IN cur_emp LOOP
+        DELETE emp  WHERE CURRENT OF cur_emp;       ---表示删除游标当前行数据
+    END LOOP;
+END;
+/
+                        </pre>
+                        <p>对于FOR UPDATE  和 FOR UPDATE OF 列 的区别可以在多表查询中体现。</p>
+                        <strong>范例： 创建多表查询的游标</strong>
+                        <pre class="source-code">
+DECLARE
+    CURSOR cur_emp IS SELECT e.sal,e.empno,e.ename,d.deptno,d.dname,d.loc 
+    FROM emp e, dept d
+    WHERE e.deptno=d.deptno
+FOR UPDATE ;
+    BEGIN   
+    FOR emp_row IN cur_emp LOOP
+        UPDATE emp SET sal=9999 WHERE CURRENT OF cur_emp;       ---表示删除游标当前行数据
+    END LOOP;
+END;
+/
+                        </pre>
+                        <br>
+                        <p>运行结束之后可以发现雇员的工资并没有被修改。 此时改用FOR UPDATE OF</p>
+                        <pre class="source-code">
+DECLARE
+    CURSOR cur_emp IS SELECT e.sal,e.empno,e.ename,d.deptno,d.dname,d.loc 
+    FROM emp e, dept d
+    WHERE e.deptno=d.deptno
+    FOR UPDATE OF e.sal;
+BEGIN   
+    FOR emp_row IN cur_emp LOOP
+        UPDATE emp SET sal=9999 WHERE CURRENT OF cur_emp;       ---表示删除游标当前行数据
+    END LOOP;
+END;
+/
+                        </pre>
+                        <p>此时可以发现工资已经被修改了。 结论是： 如果要保证游标的数据一定会更新成功的话，那么则需要添加上列。</p>
+                        <h2>游标变量</h2>
+                        <ul>
+                            <li>在前面定义的游标都是针对与一条固定的SQL查询语句而定义的，这样的游标可以统一称为静态游标，而除了这种静态的游标之外也可以定义游标时不绑定具体的查询，而是动态的打开指定类型的查询，这样的做法就会更加的灵活。
+                                <ul>
+                                    <li>定义游标变量类型
+                                        <ul><li>TYPE 游标变量类型名称 IS REF CURSOR [RETURN 数据类型];</li></ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>游标变量一定需要一个类型定义 ，如果写上了RETURN 那么就表示是一种强类型的定义，如果不写RETURN就表示弱类型的定义，强类型的话其查询语句结构必须与声明的一致。而如果是弱类型的话，就可以在操作的时候动态决定。</li>
+                        </ul>
+                        <br>
+                        <strong>范例： 定义一个REF游标</strong>
+                        <pre class="source-code">
+DECLARE
+    TYPE dept_ref IS REF CURSOR RETURN dept%ROWTYPE;    --强类型定义
+    cur_dept         dept_ref;  ---存放dept表数据
+    v_deptRow    dept%ROWTYPE;
+BEGIN
+    OPEN cur_dept FOR SELECT * FROM dept;   ---打开游标并决定游标类型
+    LOOP
+        FETCH cur_dept INTO v_deptRow;      ---取得游标数据
+        EXIT WHEN cur_dept%NOTFOUND ;       ---不存在数据则退出
+        DBMS_OUTPUT.put_line('部门编号: ' || v_deptRow.deptno || '，部门位置: ' ||
+        v_deptRow.loc);
+    END LOOP;
+    CLOSE cur_dept;
+END;
+/
+                        </pre>
+                        <p>在使用游标变量的时候，无法使用FOR循环，只能使用LOOP循环</p>
+                        <p>对于游标打开数据存在限制，即 如果打开游标为以下方式：</p>
+                        <pre class="source-code">
+  OPEN cur_dept FOR SELECT * FROM emp;  ---打开游标并决定游标类型
+                        </pre>
+                        <p>程序将报告错误， 因为声明的返回类型是 dept%ROWTYPE.
+                        如果希望能够用于任何类型的话，则可以使用弱类型声明，也就是在定义游标变量的时候不写RETURN。
+                        但是如果真的是弱类型的话，也会存在一种限制。即： 操作的类型需要与SQL查询语句保持一致。
+                        否则将会报告异常。 如：</p>
+                        <pre class="source-code">
+DECLARE
+    TYPE dept_ref IS REF CURSOR ;   --弱类型定义
+    cur_dept         dept_ref;  ---存放dept表数据
+    v_deptRow    dept%ROWTYPE;
+BEGIN
+    OPEN cur_dept FOR SELECT * FROM emp;    ---打开游标并决定游标类型
+    LOOP
+        FETCH cur_dept INTO v_deptRow;      ---取得游标数据
+        EXIT WHEN cur_dept%NOTFOUND ;       ---不存在数据则退出
+        DBMS_OUTPUT.put_line('部门编号: ' || v_deptRow.deptno || '，部门位置: ' ||
+        v_deptRow.loc);
+    END LOOP;
+    CLOSE cur_dept;
+EXCEPTION
+    WHEN ROWTYPE_MISMATCH THEN
+        DBMS_OUTPUT.put_line('SQL CODE: ' || SQLCODE || ', SQLERRM:' ||SQLERRM);
+END;
+/
+                        </pre>
+                        <p>一个弱类型的游标变量可以操作多种数据。 范例:</p>
+                        <pre class="source-code">
+ DECLARE
+    TYPE cursor_var IS REF CURSOR ; --弱类型定义
+    cur_var          cursor_var ;   ---存放表数据
+    v_deptRow    dept%ROWTYPE;  --dept表数据
+    v_empRow     emp%ROWTYPE;   --emp表数据
+BEGIN
+    OPEN cur_var FOR SELECT * FROM dept;    ---打开dept表数据
+    LOOP
+        FETCH cur_var INTO v_deptRow;       ---取得游标数据
+        EXIT WHEN cur_var%NOTFOUND ;        ---不存在数据则退出
+        DBMS_OUTPUT.put_line('1、部门编号: ' || v_deptRow.deptno || '，部门位置: ' ||
+        v_deptRow.loc);
+        END LOOP;
+    CLOSE cur_var;
+    OPEN cur_var FOR SELECT * FROM emp WHERE  deptno=10;    ---打开emp表数据
+    LOOP
+        FETCH cur_var INTO v_empRow;        ---取得游标数据
+        EXIT WHEN cur_var%NOTFOUND ;        ---不存在数据则退出
+        DBMS_OUTPUT.put_line('2、雇员编号: ' || v_empRow.empno|| '，雇员名字: ' ||
+        v_empRow.ename);
+    END LOOP;
+    CLOSE cur_var;
+EXCEPTION
+    WHEN ROWTYPE_MISMATCH THEN
+        DBMS_OUTPUT.put_line('SQL CODE: ' || SQLCODE || ', SQLERRM:' ||SQLERRM);
+END;
+/
+                        </pre>
+                        <p>在oracle9i之后，为了方便用户操作弱类型。Oracle专门定义了一个 "SYS_REFCURSOR" 类型</p>
+                        <strong>范例： 使用 SYS_REFCURSOR</strong>
+                        <pre class="source-code">
+DECLARE
+    cur_var          SYS_REFCURSOR; ---存放表数据
+    v_deptRow    dept%ROWTYPE;  --dept表数据
+    v_empRow     emp%ROWTYPE;   --emp表数据
+BEGIN
+    OPEN cur_var FOR SELECT * FROM dept;    ---打开dept表数据
+    LOOP
+        FETCH cur_var INTO v_deptRow;       ---取得游标数据
+        EXIT WHEN cur_var%NOTFOUND ;        ---不存在数据则退出
+        DBMS_OUTPUT.put_line('1、部门编号: ' || v_deptRow.deptno || '，部门位置: ' ||
+        v_deptRow.loc);
+    CLOSE cur_var;
+    OPEN cur_var FOR SELECT * FROM emp WHERE  deptno=10;    ---打开emp表数据
+    LOOP
+        FETCH cur_var INTO v_empRow;        ---取得游标数据
+        EXIT WHEN cur_var%NOTFOUND ;        ---不存在数据则退出
+        DBMS_OUTPUT.put_line('2、雇员编号: ' || v_empRow.empno|| '，雇员名字: ' ||
+        v_empRow.ename);
+    END LOOP;
+    CLOSE cur_var;
+EXCEPTION
+    WHEN ROWTYPE_MISMATCH THEN
+        DBMS_OUTPUT.put_line('SQL CODE: ' || SQLCODE || ', SQLERRM:' ||SQLERRM);
+END;
+/
+                        </pre>
+                        <h2>小结</h2>
+                        <ul>
+                            <li>游标可以将指定查询结果中的记录逐行取出，每行数据单独进行处理。</li>
+                            <li>游标分为两类：
+                                <ul>
+                                    <li>隐式游标： 在PL/SQL块之中所编写的每条SQL语句实际上是隐式游标。</li>
+                                    <li>显示游标： 由用户明确定义的游标。</li>
+                                </ul>
+                            </li>
+                            <li>显示游标的四个属性： %FOUND、%ISOPEN、%NOTFOUND、%ROWCOUNT</li>
+                            <li>使用FOR语句可以自动的打开和关闭游标，不需要手工操作；</li>
+                            <li>FOR UPDATE 子句会将游标提取出来的数据进行行级锁定，这样在本会话更新期间，其他用户的会话就不能对其进行更新操作。</li>
+                            <li>使用FOR UPDATE 子句锁定当前行之后，就可以利用WHERE CURRENT OF 子句来进行当前行的更新操作。</li>
+                            <li>游标变量指的是在游标使用时才为其设置具体的查询语句。</li>
+                        </ul>
+                </div>    <!--- show-content -->
+            </div>      <!-- article-->
+        </div>  <!--- post-->
+    </div>      <!--    note-->
+    
+    <!-- 回到顶部 -->
+    <div class="side-tool">
+        <ul>
+            <li>
+                <a  class="function-button" href="#top" target="_self">
+                    <i class="iconfont icon-shang ic-shang"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 跳转到底部 -->
+     <div class="side-tool-2">
+        <ul>
+            <li>
+                <a  class="function-button" href="#bottom" target="_self">
+                    <i class="iconfont icon-xia ic-xia"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 底部 -->
+    <div id="bottom"></div>
+</body>
+</html>
